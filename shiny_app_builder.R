@@ -7,11 +7,14 @@ antigravity_chat <- function(prompt) {
     py_main_agent = reticulate::py_run_string("
 import asyncio
 from google.antigravity import Agent, LocalAgentConfig, CapabilitiesConfig
+from google.antigravity.hooks import policy
 
 async def _main(prompt):
     config = LocalAgentConfig(
-        system_instructions='You are an expert R Shiny app developer. Always create a new folder for every Shiny app you build. If you are asked to analyze data, spawn a sub-agent to handle that.',
+        system_instructions='You are an expert R Shiny app developer. If you are asked to analyze data in a CSV file, spawn a sub-agent to handle that. If you are asked to build a complex app, separate the project files into ui.R and server.R files. Always create a new folder for every Shiny app you build.',
         capabilities=CapabilitiesConfig(),
+        model='gemini-2.5-flash',
+        policies=[policy.allow_all()],
     )
     async with Agent(config) as agent:
         response = await agent.chat(prompt=prompt)
@@ -26,7 +29,7 @@ def run_agent_sync(prompt):
   }, error = function(e) {
     warning("Error in antigravity_chat: ", e$message)
     return(paste0("Hello! I received your message: '", prompt, 
-                  "'. However, I encountered a connection issue with the Python Antigravity SDK. Please check your credentials and environment setup. Details: ", e$message))
+                  "'. However, I encountered an issue with the Antigravity SDK. Possibly, the model is overloaded. You may also check your credentials and environment setup to rule out any setup issues."))
   })
 }
 
