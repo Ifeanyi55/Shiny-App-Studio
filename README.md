@@ -53,6 +53,8 @@ This ensures that the `shiny_app_builder.R` script can successfully load the env
 
 Once the dependencies and the virtual environment are set up, you can run the Shiny App Studio locally.
 
+**Option 1: From the R Console**
+
 In your R console, make sure your working directory is set to the folder containing the app files, then run:
 
 ```R
@@ -60,7 +62,17 @@ library(shiny)
 runApp("shiny_app_studio.R")
 ```
 
-Alternatively, if you are using RStudio, you can open `shiny_app_studio.R` and click the **Run App** button in the top right corner of the script editor.
+**Option 2: Using RStudio**
+
+If you are using RStudio, you can open `shiny_app_studio.R` and click the **Run App** button in the top right corner of the script editor.
+
+**Option 3: From the Command Line**
+
+You can also run the app directly from your terminal or command prompt:
+
+```bash
+Rscript shiny_app_studio.R
+```
 
 ## Using the App
 
